@@ -1,0 +1,34 @@
+server:
+  port: ${GATEWAY_PORT:8081}
+
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://eureka-service:8082/eureka/
+  instance:
+    prefer-ip-address: true
+spring:
+  main:
+    web-application-type: reactive
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials, RETAIN_UNIQUE
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: '*'
+            allowedMethods: "*"
+            allowedHeaders: "*"
+      routes:
+        - id: microservicio1
+          uri: lb://microservicio1-headless
+          predicates:
+            - Path=/microservicio1/**
+          filters:
+            - StripPrefix=1  
