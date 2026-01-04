@@ -1,12 +1,12 @@
 server:
-  port: ${GATEWAY_PORT:8081}
+  port: ${GATEWAY_PORT:8082}
 
 eureka:
   client:
     fetch-registry: true
     register-with-eureka: true
     service-url:
-      defaultZone: http://eureka-service:8082/eureka/
+      defaultZone: http://eureka-service:8081/eureka/
   instance:
     prefer-ip-address: true
 spring:
