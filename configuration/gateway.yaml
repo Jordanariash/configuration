@@ -6,9 +6,11 @@ eureka:
     fetch-registry: true
     register-with-eureka: true
     service-url:
-      defaultZone: http://eureka-service:8081/eureka/
+      # CORRECCIÓN 1: El puerto correcto es 8761
+      defaultZone: http://eureka-service:8761/eureka/
   instance:
     prefer-ip-address: true
+
 spring:
   main:
     web-application-type: reactive
@@ -17,6 +19,7 @@ spring:
       discovery:
         locator:
           enabled: true
+          lower-case-service-id: true
       default-filters:
         - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials, RETAIN_UNIQUE
       globalcors:
@@ -27,8 +30,11 @@ spring:
             allowedHeaders: "*"
       routes:
         - id: microservicio1
-          uri: lb://microservicio1-headless
+          # CORRECCIÓN 2: Usamos el nombre exacto de la app en Eureka
+          uri: lb://microservicio1
           predicates:
-            - Path=/microservicio1/**
-          filters:
-            - StripPrefix=1  
+            # CORRECCIÓN 3: "Atrapa todo". 
+            # Como Nginx ya quitó el /api, lo que llega aquí (ej: /toolCategory) 
+            # se lo pasamos directo al microservicio.
+            - Path=/**
+          # Quitamos StripPrefix porque Nginx ya limpió la URL.

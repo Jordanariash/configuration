@@ -1,8 +1,15 @@
 server:
-  port: ${SERVER_PORT}
+  # Buena práctica: valor por defecto 8080
+  port: ${SERVER_PORT:8080} 
 spring:
   application:
     name: microservicio1
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
 eureka:
   instance:
     preferIPAddress: true
