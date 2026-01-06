@@ -32,7 +32,7 @@ spring:
       routes:
 # --- MICROSERVICIO 3 (USUARIOS) ---
         - id: microservicio3
-          uri: lb://MICROSERVICIO3  # <--- Mayúsculas, vital para Eureka
+          uri: lb://MICROSERVICIO7  # <--- Mayúsculas, vital para Eureka
           predicates:
             # Atrapa la llamada que hace tu front (/api/users/...)
             - Path=/api/users/**
