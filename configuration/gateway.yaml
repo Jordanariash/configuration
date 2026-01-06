@@ -39,7 +39,7 @@ spring:
         - id: microservicio1
           uri: lb://MICROSERVICIO1
           predicates:
-            - Path=/api/stock/**, /api/tools/**
+            - Path=/api/stock/** # En lugar de /**
           filters:
             - StripPrefix=1
             
