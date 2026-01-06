@@ -30,17 +30,18 @@ spring:
       
       # --- AQUÍ EMPIEZA LA MAGIA DE LAS RUTAS ---
       routes:
-        # 1. RUTAS DEL MICROSERVICIO 3 (USUARIOS)
-        # Deben ir PRIMERO si vas a usar un catch-all (/**) al final
+# --- MICROSERVICIO 3 (USUARIOS) ---
         - id: microservicio3
-          uri: lb://MICROSERVICIO3
+          uri: lb://MICROSERVICIO3  # <--- Mayúsculas, vital para Eureka
           predicates:
-            # Pon aquí las rutas que maneja tu MS3. 
-            # Si tu front llama a /users/register, pon /users/**
-            # Si llama a /auth/login, pon /auth/**
-            # Puedes poner varias separadas por coma.
-            - Path=/users/**, /auth/**, /api/users/** # 2. RUTAS DEL MICROSERVICIO 1 (TOOLS)
-        # Esta se queda con el resto del tráfico (Catch-all)
+            # Atrapa la llamada que hace tu front (/api/users/...)
+            - Path=/api/users/**
+          filters:
+            # QUITA el "/api" (el primer segmento) antes de pasarlo al microservicio
+            # Así llega como "/users/create"
+            - StripPrefix=1
+
+        # --- MICROSERVICIO 1 (TOOLS / CATCH-ALL) ---
         - id: microservicio1
           uri: lb://MICROSERVICIO1
           predicates:
