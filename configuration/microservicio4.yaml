@@ -1,20 +1,15 @@
 server:
-  # La magia: Si no inyectas nada, usa 0 (puerto aleatorio)
   port: ${PORT:${SERVER_PORT:0}}
 
 eureka:
   instance:
-    # Usar IP es crucial en Kubernetes porque los hostnames a veces son confusos para Eureka
     prefer-ip-address: true
-    # El ID debe ser único para que Eureka no se confunda si hay réplicas
     instance-id: ${spring.application.name}:${spring.cloud.client.ip-address}:${random.value}
   client:
     fetch-registry: true
     register-with-eureka: true
     service-url:
       defaultZone: http://eureka-service:8761/eureka/
-
-# Opcional pero recomendado para ver qué puerto salió
 management:
   endpoints:
     web:

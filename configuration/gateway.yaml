@@ -28,20 +28,20 @@ spring:
             allowedMethods: "*"
             allowedHeaders: "*"
       
-      # --- AQUÍ EMPIEZA LA MAGIA DE LAS RUTAS ---
       routes:
-# --- MICROSERVICIO 3 (USUARIOS) ---
         - id: microservicio
-          uri: lb://MICROSERVICIO7  # <--- Mayúsculas, vital para Eureka
+          uri: lb://MICROSERVICIO7
           predicates:
-            # Atrapa la llamada que hace tu front (/api/users/...)
             - Path=/api/users/**
           filters:
-            # QUITA el "/api" (el primer segmento) antes de pasarlo al microservicio
-            # Así llega como "/users/create"
             - StripPrefix=1
-        # --- MICROSERVICIO 1 (TOOLS / CATCH-ALL) ---
         - id: microservicio1
           uri: lb://MICROSERVICIO1
           predicates:
             - Path=/**
+        - id: microservicio3
+          uri: lb://MICROSERVICIO3
+          predicates:
+            - Path=/api/clients/**, /api/clientes/** 
+            filters:
+            - StripPrefix=1
