@@ -6,7 +6,6 @@ eureka:
     fetch-registry: true
     register-with-eureka: true
     service-url:
-      # CORRECCIÓN 1: El puerto correcto es 8761
       defaultZone: http://eureka-service:8761/eureka/
   instance:
     prefer-ip-address: true
@@ -28,13 +27,21 @@ spring:
             allowedOrigins: '*'
             allowedMethods: "*"
             allowedHeaders: "*"
+      
+      # --- AQUÍ EMPIEZA LA MAGIA DE LAS RUTAS ---
       routes:
+        # 1. RUTAS DEL MICROSERVICIO 3 (USUARIOS)
+        # Deben ir PRIMERO si vas a usar un catch-all (/**) al final
+        - id: microservicio3
+          uri: lb://microservicio3
+          predicates:
+            # Pon aquí las rutas que maneja tu MS3. 
+            # Si tu front llama a /users/register, pon /users/**
+            # Si llama a /auth/login, pon /auth/**
+            # Puedes poner varias separadas por coma.
+            - Path=/users/**, /auth/**, /api/users/** # 2. RUTAS DEL MICROSERVICIO 1 (TOOLS)
+        # Esta se queda con el resto del tráfico (Catch-all)
         - id: microservicio1
-          # CORRECCIÓN 2: Usamos el nombre exacto de la app en Eureka
           uri: lb://microservicio1
           predicates:
-            # CORRECCIÓN 3: "Atrapa todo". 
-            # Como Nginx ya quitó el /api, lo que llega aquí (ej: /toolCategory) 
-            # se lo pasamos directo al microservicio.
             - Path=/**
-          # Quitamos StripPrefix porque Nginx ya limpió la URL.
