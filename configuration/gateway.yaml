@@ -35,16 +35,19 @@ spring:
             - Path=/api/users/**
           filters:
             - StripPrefix=1
+            
         - id: microservicio1
           uri: lb://MICROSERVICIO1
           predicates:
             - Path=/**
+            
         - id: microservicio3
           uri: lb://MICROSERVICIO3
           predicates:
             - Path=/api/clients/**, /api/clientes/** 
-            filters:
+          filters:
             - StripPrefix=1
+            
         - id: microservicio5
           uri: lb://MICROSERVICIO5
           predicates:
