@@ -36,12 +36,6 @@ spring:
           filters:
             - StripPrefix=1
             
-        - id: microservicio1
-          uri: lb://MICROSERVICIO1
-          predicates:
-            - Path=/api/stock/** # En lugar de /**
-          filters:
-            - StripPrefix=1
             
         - id: microservicio3
           uri: lb://MICROSERVICIO3
@@ -61,5 +55,12 @@ spring:
           uri: lb://MICROSERVICIO5
           predicates:
             - Path=/api/move/**
+          filters:
+            - StripPrefix=1
+            
+        - id: microservicio1
+          uri: lb://MICROSERVICIO1
+          predicates:
+            - Path=/api/stock/**
           filters:
             - StripPrefix=1
