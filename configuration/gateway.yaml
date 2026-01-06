@@ -24,12 +24,12 @@ spring:
       globalcors:
         cors-configurations:
           '[/**]':
-            allowedOrigins: '*'
+            allowedOrigins: "*"
             allowedMethods: "*"
             allowedHeaders: "*"
       
       routes:
-        - id: microservicio
+        - id: microservicio7
           uri: lb://MICROSERVICIO7
           predicates:
             - Path=/api/users/**
@@ -39,12 +39,21 @@ spring:
         - id: microservicio1
           uri: lb://MICROSERVICIO1
           predicates:
-            - Path=/**
+            - Path=/api/stock/**, /api/tools/**
+          filters:
+            - StripPrefix=1
             
         - id: microservicio3
           uri: lb://MICROSERVICIO3
           predicates:
-            - Path=/api/clients/**, /api/clientes/** 
+            - Path=/api/clients/**, /api/clientes/**
+          filters:
+            - StripPrefix=1
+
+        - id: microservicio4
+          uri: lb://MICROSERVICIO4
+          predicates:
+            - Path=/api/fines/**, /api/tarifas/**
           filters:
             - StripPrefix=1
             
