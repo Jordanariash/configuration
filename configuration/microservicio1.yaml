@@ -23,6 +23,11 @@ management:
         
 spring:
   datasource:
+    # Aquí construimos la URL usando las variables de entorno
+    # ${VARIABLE:valor_por_defecto_si_no_existe}
+    url: jdbc:postgresql://${POSTGRES_DB_HOST}:${POSTGRES_DB_PORT}/${POSTGRES_DB_NAME}
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
