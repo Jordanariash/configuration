@@ -33,7 +33,7 @@ spring:
         # 1. RUTAS DEL MICROSERVICIO 3 (USUARIOS)
         # Deben ir PRIMERO si vas a usar un catch-all (/**) al final
         - id: microservicio3
-          uri: lb://microservicio3
+          uri: lb://MICROSERVICIO3
           predicates:
             # Pon aquí las rutas que maneja tu MS3. 
             # Si tu front llama a /users/register, pon /users/**
@@ -42,6 +42,6 @@ spring:
             - Path=/users/**, /auth/**, /api/users/** # 2. RUTAS DEL MICROSERVICIO 1 (TOOLS)
         # Esta se queda con el resto del tráfico (Catch-all)
         - id: microservicio1
-          uri: lb://microservicio1
+          uri: lb://MICROSERVICIO1
           predicates:
             - Path=/**
