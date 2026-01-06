@@ -23,7 +23,7 @@ management:
         
 spring:
   application:
-    name: microservicio5
+    name: microservicio6
   datasource:
     url: jdbc:postgresql://${POSTGRES_DB_HOST}:${POSTGRES_DB_PORT}/${POSTGRES_DB_NAME}
     username: ${POSTGRES_USER}

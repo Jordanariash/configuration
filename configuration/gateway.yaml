@@ -31,7 +31,7 @@ spring:
       # --- AQUÍ EMPIEZA LA MAGIA DE LAS RUTAS ---
       routes:
 # --- MICROSERVICIO 3 (USUARIOS) ---
-        - id: microservicio7
+        - id: microservicio
           uri: lb://MICROSERVICIO7  # <--- Mayúsculas, vital para Eureka
           predicates:
             # Atrapa la llamada que hace tu front (/api/users/...)
@@ -40,9 +40,6 @@ spring:
             # QUITA el "/api" (el primer segmento) antes de pasarlo al microservicio
             # Así llega como "/users/create"
             - StripPrefix=1
-docker build -t jordanariash/microservicio7:latest .
-docker push jordanariash/microservicio7:latest
-cd ../..
         # --- MICROSERVICIO 1 (TOOLS / CATCH-ALL) ---
         - id: microservicio1
           uri: lb://MICROSERVICIO1
